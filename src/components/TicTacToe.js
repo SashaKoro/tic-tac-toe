@@ -25,6 +25,7 @@ class TicTacToe extends Component {
       computerChose: '',
       playersTurn: true,
       playerStarts: true,
+      turnNumber: 1,
       boxColors: [
         { backgroundColor: '#D2D2D2' },
         { backgroundColor: '#D2D2D2' },
@@ -62,6 +63,7 @@ class TicTacToe extends Component {
   }
 
   CheckIfWinner(Board) {
+    this.setState({ turnNumber: this.state.turnNumber + 1 });
     let winner = false;
     const winningLines = [
       [0,1,2],
@@ -88,7 +90,6 @@ class TicTacToe extends Component {
   }
 
   whosMove(){
-    console.log(this.state.playersTurn);
     if (this.state.playersTurn) {
       this.setState({ playersTurn: false });
       setTimeout( this.ComputerMove, 1000);
@@ -132,16 +133,64 @@ class TicTacToe extends Component {
     });
     this.setState({ boxColors: freshBoard });
     this.setState({ gameBoard: [ '', '', '', '', '', '', '', '', ''] });
+    this.setState({ turnNumber: 1 });
     this.whoStarts();
   }
 
   ComputerMove() {
+    let turnNumber = this.state.turnNumber;
     let gameBoard = this.state.gameBoard;
-    let i = 0;
-    while (gameBoard[i] !== '') {
-      i++;
+    let token = this.state.computerChose;
+
+    if (turnNumber === 1) {
+      //always corner
+      gameBoard[0] = token;
     }
-      gameBoard[i] = this.state.computerChose;
+    if (turnNumber === 2) {
+      // middle, otherwise any corner
+      if (gameBoard[4] === '') gameBoard[4] = token;
+      else gameBoard[2] = token;
+    }
+    if (turnNumber === 3) {
+      // if he went middle go opposite corner
+      // if he went opposite corner, or anywhere else, go adjacent corner
+      if (gameBoard[4] !== '') {
+        gameBoard[8] = token;
+      } else if (gameBoard[1] === ''){
+        gameBoard[2] = token;
+      } else gameBoard[6] = token;
+    }
+    if (turnNumber === 4) {
+      const winningLines = [
+        [0,1,2],
+        [0,3,6],
+        [0,4,8],
+        [1,4,7],
+        [2,4,6],
+        [2,5,8],
+        [3,4,5],
+        [6,7,8]
+      ];
+      // to write blocking a win logic -- loop over winninglines and see if there are two playerChose token in any given line
+      // if there are break out of loop, and insert a token inside the remaining slot
+
+      // blocking a possible win logic here
+      // if he goes corner, go side
+      // if he goes side, go corner to make two in a row
+    }
+    if (turnNumber === 5){
+      // to write game win logic -- loop over winninglines and see if there are two tokens already in one row,
+      // if there are - break out of the loop and insert a token to win the game
+
+      // game win logic
+      // game block logic
+      // make two in a row logic, if you can make a 'fork', play that
+    }
+    // let i = 0;
+    // while (gameBoard[i] !== '') {
+    //   i++;
+    // }
+    //   gameBoard[i] = this.state.computerChose;
 
     this.setState({ gameBoard: gameBoard });
     this.CheckIfWinner(gameBoard);
