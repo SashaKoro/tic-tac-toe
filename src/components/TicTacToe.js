@@ -133,7 +133,6 @@ class TicTacToe extends Component {
       this.setState({ infoDisplay: 'You lost...'});
       this.setState({ compScore: this.state.compScore + 1});
     }
-
     setTimeout(this.restartGame, 3000);
   }
 
@@ -153,21 +152,18 @@ class TicTacToe extends Component {
     let gameBoard = this.state.gameBoard.slice();
     let playerToken = this.state.playerChose;
     let token = this.state.computerChose;
-    if (turnNumber === 1) {
-      gameBoard[0] = token;
-    }
+
+    if (turnNumber === 1) gameBoard[0] = token;
+
     if (turnNumber === 2) {
       if (gameBoard[4] === '') gameBoard[4] = token;
       else gameBoard[2] = token;
     }
-    if (turnNumber === 3) {
-      if (gameBoard[4] !== '') {
-        gameBoard[8] = token;
-      } else if (gameBoard[1] === ''){
-        gameBoard[2] = token;
-      } else gameBoard[6] = token;
-    }
 
+    if (turnNumber === 3) {
+      if (gameBoard[4] === '') gameBoard[4] = token;
+      else gameBoard[8] = token;
+    }
 
     if (turnNumber === 4) {
       gameBoard = blockingLogic(gameBoard, playerToken, token);
@@ -193,7 +189,6 @@ class TicTacToe extends Component {
         gameBoard[i] = token;
       }
     }
-
     this.setState({ gameBoard: gameBoard });
     this.CheckIfWinner(gameBoard);
   }

@@ -42,6 +42,13 @@ const GameBoard = ({squareContains, nextMove, boxColors, playersTurn}) => {
 
   const selectedSquare = position => nextMove(position);
 
+  GameBoard.propTypes = {
+    squareContains: PropTypes.array,
+    nextMove: PropTypes.func,
+    boxColors: PropTypes.array,
+    playersTurn: PropTypes.bool
+  };
+
   return(
     <Board className="GameBoard container">
       <FirstRow>
@@ -61,10 +68,6 @@ const GameBoard = ({squareContains, nextMove, boxColors, playersTurn}) => {
       </ThirdRow>
     </Board>
   );
-};
-
-GameBoard.propTypes = {
-  squareContains: PropTypes.array.isRequired
 };
 
 export default GameBoard;

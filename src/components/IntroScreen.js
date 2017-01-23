@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -58,6 +58,10 @@ const Or = styled.p`
 `;
 
 const IntroScreen = ({ChooseThis}) => {
+
+  IntroScreen.propTypes = {
+    ChooseThis: PropTypes.function
+  };
 
   const X = () => ChooseThis('X', 'O');
   const O = () => ChooseThis('O', 'X');

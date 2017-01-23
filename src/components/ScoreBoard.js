@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -24,7 +24,13 @@ const Output = styled.output`
   display: inline-block;
 `;
 
-const ScoreBoard = ({ playerScore, compScore }) => {
+const ScoreBoard = ({playerScore, compScore}) => {
+
+  ScoreBoard.propTypes = {
+    playerScore: PropTypes.number.isRequired,
+    compScore: PropTypes.number.isRequired
+  };
+
   return(
     <Div>
       <InnerDiv>
