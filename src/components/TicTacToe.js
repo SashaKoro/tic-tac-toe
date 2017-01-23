@@ -2,21 +2,17 @@ import React, {Component} from 'react';
 import IntroScreen from './IntroScreen';
 import GameBoard from './GameBoard';
 import ScoreBoard from './ScoreBoard';
-import toastr from 'toastr';
-import styled from 'styled-components';
-
-const P = styled.p`
-  margin-top: 75px;
-  text-align: center;
-  font-family: Futura, Arial;
-  font-size: 25px;
-`;
+import InfoDisplay from './InfoDisplay';
+import blockingLogic from './functions/blockingLogic';
+import gameWinLogic from './functions/gameWinLogic';
+import forkLogic from './functions/forkLogic';
 
 class TicTacToe extends Component {
   constructor(props){
     super(props);
 
     this.state = {
+      infoDisplay: 'Your Turn!',
       showIntroScreen: true,
       playerScore: 0,
       compScore: 0,
@@ -56,15 +52,14 @@ class TicTacToe extends Component {
 
   NewPlayerMove(position){
     let placeToken = this.state.playerChose;
-    let currentBoard = this.state.gameBoard;
+    let currentBoard = this.state.gameBoard.slice();
     currentBoard[position] = placeToken;
     this.setState({gameBoard: currentBoard});
     this.CheckIfWinner(currentBoard);
   }
 
   CheckIfWinner(Board) {
-    this.setState({ turnNumber: this.state.turnNumber + 1 });
-    let winner = false;
+    let gameOver = false;
     const winningLines = [
       [0,1,2],
       [0,3,6],
@@ -78,52 +73,68 @@ class TicTacToe extends Component {
     winningLines.forEach(winLine  => {
       let [winIdxOne, winIdxTwo, winIdxThree] = winLine;
       if (Board[winIdxOne] + Board[winIdxTwo] + Board[winIdxThree] === 'XXX') {
-        winner = true;
+        gameOver = true;
         this.crownWinner('X', winIdxOne, winIdxTwo, winIdxThree);
 
       } else if (Board[winIdxOne] + Board[winIdxTwo] + Board[winIdxThree] === 'OOO') {
-        winner = true;
+        gameOver = true;
         this.crownWinner('O', winIdxOne, winIdxTwo, winIdxThree);
       }
     });
-    if (!winner) this.whosMove();
+    if (Board.join('').length === 9) {
+      gameOver = true;
+      this.tieGame();
+    }
+    if (!gameOver) this.whosMove();
+  }
+
+  tieGame() {
+    this.setState({ infoDisplay: "Tie game!"});
+    setTimeout(this.restartGame, 3000);
   }
 
   whosMove(){
+    this.setState({ turnNumber: this.state.turnNumber + 1 });
     if (this.state.playersTurn) {
+      this.setState({ infoDisplay: 'Thinking...'});
       this.setState({ playersTurn: false });
       setTimeout( this.ComputerMove, 1000);
 
-    } else this.setState({ playersTurn: true });
+    } else {
+      this.setState({ playersTurn: true });
+      this.setState({ infoDisplay: 'Your Turn!' });
+    }
   }
 
   whoStarts(){
     if (this.state.playerStarts) {
       this.setState({ playerStarts: false });
       this.setState({ playersTurn: false });
+      this.setState({ infoDisplay: 'Thinking...'});
       setTimeout( this.ComputerMove, 1000);
     } else {
       this.setState({ playerStarts: true });
       this.setState({ playersTurn: true });
+      this.setState({ infoDisplay: 'Your Turn!' });
     }
   }
 
   crownWinner(winningToken, winIdxOne, winIdxTwo, winIdxThree) {
     let winningColor = '#EFD469';
-    let Colors = this.state.boxColors;
+    let Colors = JSON.parse(JSON.stringify(this.state.boxColors));
     Colors[winIdxOne].backgroundColor = winningColor;
     Colors[winIdxTwo].backgroundColor = winningColor;
     Colors[winIdxThree].backgroundColor = winningColor;
     this.setState({ boxColors: Colors });
     if (winningToken === this.state.playerChose) {
-      toastr.success("You're the Winner!");
+      this.setState({ infoDisplay: "You won!"});
       this.setState({ playerScore: this.state.playerScore + 1});
     } else {
-      toastr.error('Defeated by the Computer!');
+      this.setState({ infoDisplay: 'You lost...'});
       this.setState({ compScore: this.state.compScore + 1});
     }
 
-    setTimeout(this.restartGame, 5000);
+    setTimeout(this.restartGame, 3000);
   }
 
   restartGame() {
@@ -139,66 +150,55 @@ class TicTacToe extends Component {
 
   ComputerMove() {
     let turnNumber = this.state.turnNumber;
-    let gameBoard = this.state.gameBoard;
+    let gameBoard = this.state.gameBoard.slice();
+    let playerToken = this.state.playerChose;
     let token = this.state.computerChose;
-
     if (turnNumber === 1) {
-      //always corner
       gameBoard[0] = token;
     }
     if (turnNumber === 2) {
-      // middle, otherwise any corner
       if (gameBoard[4] === '') gameBoard[4] = token;
       else gameBoard[2] = token;
     }
     if (turnNumber === 3) {
-      // if he went middle go opposite corner
-      // if he went opposite corner, or anywhere else, go adjacent corner
       if (gameBoard[4] !== '') {
         gameBoard[8] = token;
       } else if (gameBoard[1] === ''){
         gameBoard[2] = token;
       } else gameBoard[6] = token;
     }
+
+
     if (turnNumber === 4) {
-      const winningLines = [
-        [0,1,2],
-        [0,3,6],
-        [0,4,8],
-        [1,4,7],
-        [2,4,6],
-        [2,5,8],
-        [3,4,5],
-        [6,7,8]
-      ];
-      // to write blocking a win logic -- loop over winninglines and see if there are two playerChose token in any given line
-      // if there are break out of loop, and insert a token inside the remaining slot
+      gameBoard = blockingLogic(gameBoard, playerToken, token);
 
-      // blocking a possible win logic here
-      // if he goes corner, go side
-      // if he goes side, go corner to make two in a row
+      if (gameBoard.join('').length === 3) {
+        gameBoard = forkLogic(gameBoard, playerToken, token);
+      }
+      if (gameBoard.join('').length === 3) {
+        if(gameBoard[1] !== playerToken){
+          gameBoard[1] = token;
+        } else gameBoard[3] = token;
+      }
     }
-    if (turnNumber === 5){
-      // to write game win logic -- loop over winninglines and see if there are two tokens already in one row,
-      // if there are - break out of the loop and insert a token to win the game
+    if (turnNumber > 4 ){
+      gameBoard = gameWinLogic(gameBoard, playerToken, token);
 
-      // game win logic
-      // game block logic
-      // make two in a row logic, if you can make a 'fork', play that
+      if (gameBoard.join('').length === turnNumber - 1) {
+        gameBoard = blockingLogic(gameBoard, playerToken, token);
+      }
+      if (gameBoard.join('').length === turnNumber - 1) {
+        let i = 0;
+        while (gameBoard[i] !== '') i++;
+        gameBoard[i] = token;
+      }
     }
-    // let i = 0;
-    // while (gameBoard[i] !== '') {
-    //   i++;
-    // }
-    //   gameBoard[i] = this.state.computerChose;
 
     this.setState({ gameBoard: gameBoard });
     this.CheckIfWinner(gameBoard);
   }
 
   render(){
-    let whoseTurn;
-    (this.state.playersTurn) ? whoseTurn = <P>Your Turn!</P> : whoseTurn = <P>Thinking...</P>;
 
     if (this.state.showIntroScreen) {
       return (
@@ -208,7 +208,8 @@ class TicTacToe extends Component {
     }
     else return (
       <div>
-        {whoseTurn}
+        <InfoDisplay
+         info={this.state.infoDisplay} />
         <GameBoard
           playersTurn={this.state.playersTurn}
           nextMove={this.NewPlayerMove}
