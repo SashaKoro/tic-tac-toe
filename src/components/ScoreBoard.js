@@ -32,12 +32,12 @@ const ScoreBoard = ({playerScore, compScore}) => {
   };
 
   return(
-    <Div>
+    <Div className="ScoreBoard">
       <InnerDiv>
         <P>Player:</P>
-        <Output>{playerScore}</Output>
+        <Output className="playerOutput">{playerScore}</Output>
         <P>Computer:</P>
-        <Output>{compScore}</Output>
+        <Output className="compOutput">{compScore}</Output>
       </InnerDiv>
     </Div>
   );

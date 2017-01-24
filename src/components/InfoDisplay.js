@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import styled from 'styled-components';
 
-
 const P = styled.p`
   margin-top: 75px;
   text-align: center;
@@ -16,7 +15,7 @@ const InfoDisplay = ({info}) => {
   };
 
   return(
-    <P>{info}</P>
+    <P className="InfoDisplay" >{info}</P>
   );
 };
 

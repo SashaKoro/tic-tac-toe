@@ -60,7 +60,7 @@ const Or = styled.p`
 const IntroScreen = ({ChooseThis}) => {
 
   IntroScreen.propTypes = {
-    ChooseThis: PropTypes.function
+    ChooseThis: PropTypes.func
   };
 
   const X = () => ChooseThis('X', 'O');
