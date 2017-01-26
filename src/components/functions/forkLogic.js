@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const forkLogic = (gameBoard, playerToken, token) => {
   const forkLines = [
     [1, 3],
@@ -23,8 +25,9 @@ const forkLogic = (gameBoard, playerToken, token) => {
       playerTokenIndexes.push(i);
     }
   }
+
   for (let j = 0; j < forkLines.length; j++ ){
-    if (forkLines[j][0] === playerTokenIndexes[0] && forkLines[j][1] === playerTokenIndexes[1]) {
+    if (_.isEqual(forkLines[j], playerTokenIndexes)) {
       gameBoard[counterMoves[j]] = token;
     }
   }

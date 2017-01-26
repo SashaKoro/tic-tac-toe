@@ -69,9 +69,9 @@ const IntroScreen = ({ChooseThis}) => {
     <Div className="IntroScreen container">
       <P className="text-center">Tic Tac Toe</P>
       <ButtonDiv>
-        <Button onClick={X}>X</Button>
+        <Button className="xButton" onClick={X}>X</Button>
         <Or>or</Or>
-        <Button onClick={O}>O</Button>
+        <Button className="oButton" onClick={O}>O</Button>
       </ButtonDiv>
     </Div>
   );

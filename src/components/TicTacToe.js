@@ -3,8 +3,7 @@ import IntroScreen from './IntroScreen';
 import GameBoard from './GameBoard';
 import ScoreBoard from './ScoreBoard';
 import InfoDisplay from './InfoDisplay';
-import blockingLogic from './functions/blockingLogic';
-import gameWinLogic from './functions/gameWinLogic';
+import rowLogic from './functions/rowLogic';
 import forkLogic from './functions/forkLogic';
 
 class TicTacToe extends Component {
@@ -13,12 +12,12 @@ class TicTacToe extends Component {
 
     this.state = {
       infoDisplay: 'Your Turn!',
-      showIntroScreen: true,
+      showIntroScreen: true, //tested
       playerScore: 0,
       compScore: 0,
       gameBoard: [ '', '', '', '', '', '', '', '', ''],
-      playerChose: '',
-      computerChose: '',
+      playerChose: '', //tested
+      computerChose: '', //tested
       playersTurn: true,
       playerStarts: true,
       turnNumber: 1,
@@ -166,7 +165,7 @@ class TicTacToe extends Component {
     }
 
     if (turnNumber === 4) {
-      gameBoard = blockingLogic(gameBoard, playerToken, token);
+      gameBoard = rowLogic(gameBoard, playerToken, token);
 
       if (gameBoard.join('').length === 3) {
         gameBoard = forkLogic(gameBoard, playerToken, token);
@@ -178,10 +177,10 @@ class TicTacToe extends Component {
       }
     }
     if (turnNumber > 4 ){
-      gameBoard = gameWinLogic(gameBoard, playerToken, token);
+      gameBoard = rowLogic(gameBoard, token, token);
 
       if (gameBoard.join('').length === turnNumber - 1) {
-        gameBoard = blockingLogic(gameBoard, playerToken, token);
+        gameBoard = rowLogic(gameBoard, playerToken, token);
       }
       if (gameBoard.join('').length === turnNumber - 1) {
         let i = 0;
@@ -198,11 +197,12 @@ class TicTacToe extends Component {
     if (this.state.showIntroScreen) {
       return (
         <IntroScreen
-        ChooseThis={this.PlayerHasChosen} />
+        className="IntroScreen" ChooseThis={this.PlayerHasChosen} />
       );
     }
+
     else return (
-      <div>
+      <div className="TicTacToe">
         <InfoDisplay
          info={this.state.infoDisplay} />
         <GameBoard

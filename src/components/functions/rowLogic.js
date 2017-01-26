@@ -1,4 +1,4 @@
-const blockingLogic = (gameBoard, playerToken, token) => {
+const rowLogic = (gameBoard, testToken, token) => {
   const winningLines = [
     [0,1,2],
     [0,3,6],
@@ -10,16 +10,16 @@ const blockingLogic = (gameBoard, playerToken, token) => {
     [6,7,8]
   ];
   let putItHere;
-  let playerTokenIndexes = [];
+  let tokenIndexes = [];
 
   for (let i = 0; i < gameBoard.length; i++) {
-    if (gameBoard[i] === playerToken) {
-      playerTokenIndexes.push(i);
+    if (gameBoard[i] === testToken) {
+      tokenIndexes.push(i);
     }
   }
 
   for (let j = 0; j < winningLines.length; j++) {
-    let found = playerTokenIndexes.filter((eachIndex) => {
+    let found = tokenIndexes.filter((eachIndex) => {
       return winningLines[j].includes(eachIndex);
     });
     if (found.length === 2) {
@@ -31,7 +31,9 @@ const blockingLogic = (gameBoard, playerToken, token) => {
     }
   }
 
+
   return gameBoard;
 };
 
-export default blockingLogic;
+
+export default rowLogic;
