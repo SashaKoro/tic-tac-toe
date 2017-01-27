@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes, } from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -32,17 +32,17 @@ const Button = styled.button`
   border-radius: 5px;
   border: 7px solid #107896;
   background-color: #1287A8;
-  
+
   &:hover {
     cursor: pointer;
     background-color: #1496BB;
     border: 7px solid #1496BB;
   }
-  
+
   &:focus {
     outline: 2px solid black;
   }
-  
+
   &:active {
     background-color: #43ABC9;
     border: 7px solid #43ABC9;
@@ -57,15 +57,14 @@ const Or = styled.p`
   font-size: 60px;
 `;
 
-const IntroScreen = ({ChooseThis}) => {
-
+const IntroScreen = ({ chooseThis, }) => {
   IntroScreen.propTypes = {
-    ChooseThis: PropTypes.func
+    chooseThis: PropTypes.func,
   };
 
-  const X = () => ChooseThis('X', 'O');
-  const O = () => ChooseThis('O', 'X');
-  return(
+  const X = () => chooseThis('X', 'O');
+  const O = () => chooseThis('O', 'X');
+  return (
     <Div className="IntroScreen container">
       <P className="text-center">Tic Tac Toe</P>
       <ButtonDiv>
