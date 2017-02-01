@@ -5,6 +5,7 @@ import ScoreBoard from './ScoreBoard';
 import InfoDisplay from './InfoDisplay';
 import rowLogic from './functions/rowLogic';
 import forkLogic from './functions/forkLogic';
+import _ from 'lodash';
 
 class TicTacToe extends Component {
   constructor (props) {
@@ -12,12 +13,12 @@ class TicTacToe extends Component {
 
     this.state = {
       infoDisplay: 'Your Turn!',
-      showIntroScreen: true, // tested
+      showIntroScreen: true,
       playerScore: 0,
       compScore: 0,
       gameBoard: ['', '', '', '', '', '', '', '', '',],
-      playerChose: '', // tested
-      computerChose: '', // tested
+      playerChose: '',
+      computerChose: '',
       playersTurn: true,
       playerStarts: true,
       turnNumber: 1,
@@ -134,7 +135,8 @@ class TicTacToe extends Component {
   }
 
   restartGame () {
-    let freshBoard = this.state.boxColors.map((eachColor) => {
+    let boardCopy = _.cloneDeep(this.state.boxColors);
+    let freshBoard = boardCopy.map((eachColor) => {
       eachColor.backgroundColor = '#D2D2D2';
       return eachColor;
     });
