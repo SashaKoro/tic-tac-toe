@@ -46,7 +46,9 @@ const GameBoard = ({ squareContains, nextMove, boxColors, playersTurn, }) => {
   GameBoard.propTypes = {
     squareContains: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     nextMove: PropTypes.func,
-    boxColors: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    boxColors: PropTypes.arrayOf(PropTypes.shape({
+      backgroundColor: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
     playersTurn: PropTypes.bool,
   };
 
