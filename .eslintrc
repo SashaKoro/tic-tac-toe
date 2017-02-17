@@ -11,7 +11,8 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "experimentalObjectRestSpread": true
     }
   },
   "env": {
@@ -24,12 +25,12 @@
   "rules": {
     "array-bracket-spacing": 1,
     "array-callback-return": 1,
-    "arrow-body-style": [1, "as-needed"],
+    "arrow-body-style": 1,
     "arrow-parens": 1,
     "arrow-spacing": 1,
     "brace-style": 1,
     "camelcase": 1,
-    "comma-dangle": [1, always],
+    "comma-dangle": [1, "always-multiline"],
     "comma-style": 1,
     "dot-notation": 1,
     "eol-last": 1,
@@ -86,7 +87,7 @@
     "react/jsx-indent-props": 0,
     "react/jsx-key": 1,
     "react/jsx-max-props-per-line": 0,
-    "react/jsx-no-bind": 0,
+    "react/jsx-no-bind": 1,
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-literals": 0,
     "react/jsx-no-undef": 1,

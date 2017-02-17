@@ -1,5 +1,7 @@
+/* eslint-disable no-undef */
+
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import GameBoard from '../src/components/GameBoard';
 
 describe('GameBoard', () => {
@@ -13,8 +15,8 @@ describe('GameBoard', () => {
     { backgroundColor: '#D2D2D2' },
     { backgroundColor: '#D2D2D2' },
     { backgroundColor: '#D2D2D2' },
-    { backgroundColor: '#D2D2D2' }
-    ];
+    { backgroundColor: '#D2D2D2' },
+  ];
 
   it('is selectable by class name', () => {
     const wrapper = shallow(<GameBoard squareContains={board} boxColors={boxColors} />);

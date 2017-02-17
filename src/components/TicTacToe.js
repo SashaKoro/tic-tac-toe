@@ -1,4 +1,4 @@
-import React, { Component, } from 'react';
+import React, { Component } from 'react';
 import IntroScreen from './IntroScreen';
 import GameBoard from './GameBoard';
 import ScoreBoard from './ScoreBoard';
@@ -16,22 +16,22 @@ class TicTacToe extends Component {
       showIntroScreen: true,
       playerScore: 0,
       compScore: 0,
-      gameBoard: ['', '', '', '', '', '', '', '', '',],
+      gameBoard: ['', '', '', '', '', '', '', '', ''],
       playerChose: '',
       computerChose: '',
       playersTurn: true,
       playerStarts: true,
       turnNumber: 1,
       boxColors: [
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
-        { backgroundColor: '#D2D2D2', },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
+        { backgroundColor: '#D2D2D2' },
       ],
     };
 
@@ -45,33 +45,33 @@ class TicTacToe extends Component {
   }
 
   PlayerHasChosen (choice, computerToken) {
-    this.setState({ showIntroScreen: false, });
-    this.setState({ playerChose: choice, });
-    this.setState({ computerChose: computerToken, });
+    this.setState({ showIntroScreen: false });
+    this.setState({ playerChose: choice });
+    this.setState({ computerChose: computerToken });
   }
 
   NewPlayerMove (position) {
     let placeToken = this.state.playerChose;
     let currentBoard = this.state.gameBoard.slice();
     currentBoard[position] = placeToken;
-    this.setState({ gameBoard: currentBoard, });
+    this.setState({ gameBoard: currentBoard });
     this.checkIfWinner(currentBoard);
   }
 
   checkIfWinner (Board) {
     let gameOver = false;
     const winningLines = [
-      [0,1,2,],
-      [0,3,6,],
-      [0,4,8,],
-      [1,4,7,],
-      [2,4,6,],
-      [2,5,8,],
-      [3,4,5,],
-      [6,7,8,],
+      [0,1,2],
+      [0,3,6],
+      [0,4,8],
+      [1,4,7],
+      [2,4,6],
+      [2,5,8],
+      [3,4,5],
+      [6,7,8],
     ];
     winningLines.forEach((winLine) => {
-      let [winIdxOne, winIdxTwo, winIdxThree,] = winLine;
+      let [winIdxOne, winIdxTwo, winIdxThree] = winLine;
       if (Board[winIdxOne] + Board[winIdxTwo] + Board[winIdxThree] === 'XXX') {
         gameOver = true;
         this.crownWinner('X', winIdxOne, winIdxTwo, winIdxThree);
@@ -88,32 +88,32 @@ class TicTacToe extends Component {
   }
 
   tieGame () {
-    this.setState({ infoDisplay: 'Tie game!', });
+    this.setState({ infoDisplay: 'Tie game!' });
     setTimeout(this.restartGame, 3000);
   }
 
   whosMove () {
-    this.setState({ turnNumber: this.state.turnNumber + 1, });
+    this.setState({ turnNumber: this.state.turnNumber + 1 });
     if (this.state.playersTurn) {
-      this.setState({ infoDisplay: 'Thinking...', });
-      this.setState({ playersTurn: false, });
+      this.setState({ infoDisplay: 'Thinking...' });
+      this.setState({ playersTurn: false });
       setTimeout(this.ComputerMove, 1000);
     } else {
-      this.setState({ playersTurn: true, });
-      this.setState({ infoDisplay: 'Your Turn!', });
+      this.setState({ playersTurn: true });
+      this.setState({ infoDisplay: 'Your Turn!' });
     }
   }
 
   whoStarts () {
     if (this.state.playerStarts) {
-      this.setState({ playerStarts: false, });
-      this.setState({ playersTurn: false, });
-      this.setState({ infoDisplay: 'Thinking...', });
+      this.setState({ playerStarts: false });
+      this.setState({ playersTurn: false });
+      this.setState({ infoDisplay: 'Thinking...' });
       setTimeout(this.ComputerMove, 1000);
     } else {
-      this.setState({ playerStarts: true, });
-      this.setState({ playersTurn: true, });
-      this.setState({ infoDisplay: 'Your Turn!', });
+      this.setState({ playerStarts: true });
+      this.setState({ playersTurn: true });
+      this.setState({ infoDisplay: 'Your Turn!' });
     }
   }
 
@@ -123,13 +123,13 @@ class TicTacToe extends Component {
     Colors[winIdxOne].backgroundColor = winningColor;
     Colors[winIdxTwo].backgroundColor = winningColor;
     Colors[winIdxThree].backgroundColor = winningColor;
-    this.setState({ boxColors: Colors, });
+    this.setState({ boxColors: Colors });
     if (winningToken === this.state.playerChose) {
-      this.setState({ infoDisplay: 'You won!', });
-      this.setState({ playerScore: this.state.playerScore + 1, });
+      this.setState({ infoDisplay: 'You won!' });
+      this.setState({ playerScore: this.state.playerScore + 1 });
     } else {
-      this.setState({ infoDisplay: 'You lost...', });
-      this.setState({ compScore: this.state.compScore + 1, });
+      this.setState({ infoDisplay: 'You lost...' });
+      this.setState({ compScore: this.state.compScore + 1 });
     }
     setTimeout(this.restartGame, 3000);
   }
@@ -140,9 +140,9 @@ class TicTacToe extends Component {
       eachColor.backgroundColor = '#D2D2D2';
       return eachColor;
     });
-    this.setState({ boxColors: freshBoard, });
-    this.setState({ gameBoard: ['', '', '', '', '', '', '', '', '',], });
-    this.setState({ turnNumber: 1, });
+    this.setState({ boxColors: freshBoard });
+    this.setState({ gameBoard: ['', '', '', '', '', '', '', '', ''] });
+    this.setState({ turnNumber: 1 });
     this.whoStarts();
   }
 
@@ -188,7 +188,7 @@ class TicTacToe extends Component {
         gameBoard[i] = token;
       }
     }
-    this.setState({ gameBoard, });
+    this.setState({ gameBoard });
     this.checkIfWinner(gameBoard);
   }
 

@@ -2,21 +2,21 @@ import _ from 'lodash';
 
 const forkLogic = (gameBoard, playerToken, token) => {
   const forkLines = [
-    [1, 3,],
-    [1, 5,],
-    [3, 7,],
-    [5, 7,],
-    [0, 5,],
-    [0, 7,],
-    [1, 6,],
-    [1, 8,],
-    [2, 3,],
-    [2, 7,],
-    [3, 8,],
-    [5, 6,],
+    [1, 3],
+    [1, 5],
+    [3, 7],
+    [5, 7],
+    [0, 5],
+    [0, 7],
+    [1, 6],
+    [1, 8],
+    [2, 3],
+    [2, 7],
+    [3, 8],
+    [5, 6],
   ];
 
-  const counterMoves = [2, 0, 6, 8, 2, 6, 0, 2, 0, 8, 6, 8,];
+  const counterMoves = [2, 0, 6, 8, 2, 6, 0, 2, 0, 8, 6, 8];
 
   let playerTokenIndexes = [];
 

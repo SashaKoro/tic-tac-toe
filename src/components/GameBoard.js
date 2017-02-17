@@ -1,4 +1,4 @@
-import React, { PropTypes, } from 'react';
+import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 
 const Board = styled.div`
@@ -37,9 +37,9 @@ const ThirdRow = styled.div`
   margin-left: -15px;
 `;
 
-const GameBoard = ({ squareContains, nextMove, boxColors, playersTurn, }) => {
-  let [zero, one, two, three, four, five, six, seven, eight,] = squareContains;
-  let [color0, color1, color2, color3, color4, color5, color6, color7, color8,] = boxColors;
+const GameBoard = ({ squareContains, nextMove, boxColors, playersTurn }) => {
+  let [zero, one, two, three, four, five, six, seven, eight] = squareContains;
+  let [color0, color1, color2, color3, color4, color5, color6, color7, color8] = boxColors;
 
   const chosenBox = (position) => nextMove(position);
 
@@ -52,6 +52,7 @@ const GameBoard = ({ squareContains, nextMove, boxColors, playersTurn, }) => {
     playersTurn: PropTypes.bool,
   };
 
+/* eslint-disable react/jsx-no-bind */
   return (
     <Board className="GameBoard container">
       <FirstRow>

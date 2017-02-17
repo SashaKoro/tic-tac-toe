@@ -1,4 +1,4 @@
-import React, { PropTypes, } from 'react';
+import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -57,7 +57,7 @@ const Or = styled.p`
   font-size: 60px;
 `;
 
-const IntroScreen = ({ chooseThis, }) => {
+const IntroScreen = ({ chooseThis }) => {
   IntroScreen.propTypes = {
     chooseThis: PropTypes.func,
   };

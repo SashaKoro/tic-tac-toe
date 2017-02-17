@@ -1,4 +1,4 @@
-import React, { PropTypes, } from 'react';
+import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 
 const P = styled.p`
@@ -8,7 +8,7 @@ const P = styled.p`
   font-size: 25px;
 `;
 
-const InfoDisplay = ({ info, }) => {
+const InfoDisplay = ({ info }) => {
   InfoDisplay.propTypes = {
     info: PropTypes.string.isRequired,
   };
